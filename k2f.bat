@@ -37,13 +37,16 @@ GOTO MAINPROG REM Skip function declerations
 REM Dynamic prompt for when script is run directly
 :_prompt
 	SET /P EXEC=K2F^>
-	CALL %PROGNM% %EXEC%
-	ECHO.
-	GOTO :_prompt
+	IF NOT "%EXEC%"=="exit" (
+		CALL %PROGNM% %EXEC%
+		ECHO.
+		GOTO _prompt
+	)
+	GOTO END_SWITCH
 
 REM Main decision engine
 :_decide
-	FOR %%L IN (BUILD TEST INIT PULL PUSH) DO IF "%COMMND%" EQU "%%L" GOTO :CASE_%COMMND%
+	FOR %%L IN (BUILD TEST INIT PULL PUSH EXIT) DO IF "%COMMND%" EQU "%%L" GOTO :CASE_%COMMND%
 	GOTO CASE_DEFAULT
 		:CASE_BUILD
 			%ANSICON% %PHP% tools/build.php
@@ -67,6 +70,8 @@ REM Main decision engine
 			CALL git commit -m "%MSG%"
 			CALL git push -u origin %BRANCH%
 			GOTO END_SWITCH
+		:CASE_EXIT
+			EXIT
 		:CASE_DEFAULT
 			ECHO Usage: %PROGNM% COMMAND [options]
 			ECHO.
@@ -77,6 +82,7 @@ REM Main decision engine
 			ECHO init   Install any dependencies and set up Git
 			ECHO pull   Get any updates from Git VCS system
 			ECHO push   Send any changes to Git VCS system
+			ECHO exit   Close dynamic prompt
 			ECHO.
 			ECHO List of Options:
 			ECHO /b     Change Git branch (defaults to "master")

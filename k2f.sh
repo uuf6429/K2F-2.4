@@ -23,9 +23,11 @@ eval "PARSE_NEXT_ARG $@"
 # Dynamic prompt for when script is run directly
 _prompt(){
 	read -p "K2F>" EXEC
-	$PROGNM $EXEC
-	echo ""
-	_prompt
+	if [ "$EXEC" != "exit" ]; then
+		$PROGNM $EXEC
+		echo ""
+		_prompt
+	fi
 }
 
 # Main decision engine
@@ -53,6 +55,9 @@ _decide(){
 			git commit -m "$MSG"
 			git push -u origin $BRANCH
 			;;
+		exit)
+			exit
+			;;
 		*)
 			echo "Usage: $PROGNM COMMAND [options]"
 			echo ""
@@ -63,6 +68,7 @@ _decide(){
 			echo "init   Install any dependencies and set up Git"
 			echo "pull   Get any updates from Git VCS system"
 			echo "push   Send any changes to Git VCS system"
+			echo "exit   Close dynamic prompt"
 			echo ""
 			echo "List of Options:"
 			echo "-b     Change Git branch (defaults to \"master\")"

@@ -8,7 +8,7 @@
 	
 	$test = new Testcaser(new $rep);
 	
-	$test->load(glob(dirname(__FILE__).DIRECTORY_SEPARATOR.'*.php'));
+	$test->add(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'tests'.DIRECTORY_SEPARATOR, true);
 	
 	$test->run();
 	

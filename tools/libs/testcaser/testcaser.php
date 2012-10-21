@@ -40,6 +40,11 @@
 		protected $_reporter = null;
 		
 		/**
+		 * @var array List of files to test.
+		 */
+		protected $_files = array();
+		
+		/**
 		 * Construct a new instance with dependencies.
 		 * @param TestcaserReporter $reporter Reporter instance.
 		 */
@@ -67,21 +72,47 @@
 			ini_set('display_errors', true);
 		}
 		
-		public function load($files){
-			foreach($files as $file){
+		/**
+		 * Add a path for loading tests.
+		 * @param string $path Either a folder or a specific PHP file.
+		 * @param boolean $recursive If $path is a folder and this option is true, each subfolder is also loaded.
+		 */
+		public function add($path, $recursive=true){
+			if(is_dir($path)){
+				if(substr($path, -1, 1) != DIRECTORY_SEPARATOR){
+					$path.=DIRECTORY_SEPARATOR;
+				}
+				foreach(glob($path.'*') as $item){
+					if($recursive || is_file($item)){
+						$this->add($item, $recursive);
+					}
+				}
+			}elseif(is_file($path)){
+				$this->_files[] = realpath($path);
+			}else{
+				throw new InvalidArgumentException('The path "'.$path.'" is not accessible');
+			}
+		}
+		
+		/**
+		 * Runs tests over all loaded files.
+		 * @return boolean True if all tests were successful, false otherwise.
+		 */
+		public function run(){
+			// initialize
+			$this->_reporter->init();
+			$this->_start_listening();
+			// load
+			foreach($this->_files as $file){
 				try {
 					include_once($file);
 				}catch(Exception $e){
 					$this->_reporter->handle_exception($e);
 				}
 			}
-		}
-		
-		public function run(){
-			$this->_reporter->init();
-			$this->_start_listening();
 			$ignore = new TestcaserTest(null);
 			$ignore = get_class_methods($ignore);
+			// run
 			foreach(get_declared_classes() as $class){
 				if(is_subclass_of($class, 'TestcaserTest')){
 					$inst = new $class($this->_reporter);
@@ -90,9 +121,26 @@
 					}
 				}
 			}
+			// finalize
 			$this->_stop_listening();
 			$this->_reporter->fini();
 			return $this->_reporter->result();
+		}
+		
+		/**
+		 * Sets the reporter instance.
+		 * @param TestcaserReporter $reporter Reporter instance.
+		 */
+		public function set_reporter($reporter){
+			$this->_reporter = $reporter;
+		}
+		
+		/**
+		 * Gets the reporter instance.
+		 * @return TestcaserReporter Reporter instance.
+		 */
+		public function get_reporter(){
+			return $this->_reporter;
 		}
 		
 	}

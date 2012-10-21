@@ -5,7 +5,7 @@ REM - "CALL git" is used because of: http://stackoverflow.com/q/5401229/314056
 REM - Delayed expansion is required for case changing function
 REM - Ansicon is required to display colored output from scripts
 
-SETLOCAL ENABLEDELAYEDEXPANSION
+SETLOCAL ENABLEDELAYEDEXPANSION ENABLEEXTENSIONS
 
 REM Set up some variables
 
@@ -16,7 +16,7 @@ SET COMMND=%1%
 CALL :UCase COMMND COMMND
 SET PHP="php"
 IF DEFINED ProgramFiles(x86) (SET BITNESS=64) else (SET BITNESS=32)
-SET ANSICON="tests\libs\ansicon\ansicon%BITNESS%.exe"
+SET ANSICON="tools\libs\ansicon\ansicon%BITNESS%.exe"
 SET ARGC=0
 FOR %%x IN (%*) DO SET /A ARGC+=1
 

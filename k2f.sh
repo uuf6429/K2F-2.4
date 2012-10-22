@@ -53,7 +53,7 @@ _decide(){
 			git config credential.helper store
 			git add -A
 			read -p "Commit Message: " MSG
-			git commit -m "$MSG"
+			git commit --allow-empty-message -m "$MSG"
 			git push -u origin $BRANCH
 			;;
 		exit)

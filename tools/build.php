@@ -1,8 +1,8 @@
 <?php
 
 	define('DIR_BASE', realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..').DIRECTORY_SEPARATOR);
-	define('DIR_SOURCE', realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'source').DIRECTORY_SEPARATOR);
-	define('DIR_BUILD', realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'build').DIRECTORY_SEPARATOR);
+	define('DIR_SOURCE', realpath(DIR_SOURCE.'source').DIRECTORY_SEPARATOR);
+	define('DIR_BUILD', realpath(DIR_BUILD.'build').DIRECTORY_SEPARATOR);
 	
 	define('ST_NOTHING', 0);
 	define('ST_FAILURE', 1);

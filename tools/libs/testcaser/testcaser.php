@@ -5,7 +5,6 @@
 	require_once('testcaser_reporter_cli.php');
 	require_once('testcaser_reporter_web.php');
 
-
 	class Testcaser {
 		
 		/**

@@ -59,8 +59,9 @@ REM Main decision engine
 		:CASE_INIT
 			CALL git init
 			CALL git remote add origin %GITURL%
-			CALL git pull -u origin %BRANCH%
-			GOTO CASE_PULL
+			CALL git fetch
+			CALL git reset --hard origin/%BRANCH%
+			GOTO END_SWITCH
 		:CASE_PULL
 			CALL git pull -u origin %BRANCH%
 			GOTO END_SWITCH

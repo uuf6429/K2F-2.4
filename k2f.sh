@@ -44,7 +44,8 @@ _decide(){
 		init)
 			git init
 			git remote add origin $GITURL
-			git pull -u origin $BRANCH
+			git fetch
+			git reset --hard origin/%BRANCH%
 			;;
 		pull)
 			git pull -u origin $BRANCH

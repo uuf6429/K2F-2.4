@@ -65,6 +65,7 @@ REM Main decision engine
 			CALL git pull -u origin %BRANCH%
 			GOTO END_SWITCH
 		:CASE_PUSH
+			CALL git config credential.helper store
 			CALL git add -A
 			SET /P MSG=Commit Message: 
 			CALL git commit -m "%MSG%"

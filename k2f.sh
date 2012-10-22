@@ -50,6 +50,7 @@ _decide(){
 			git pull -u origin $BRANCH
 			;;
 		push)
+			git config credential.helper store
 			git add -A
 			read -p "Commit Message: " MSG
 			git commit -m "$MSG"

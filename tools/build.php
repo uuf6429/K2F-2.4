@@ -1,8 +1,8 @@
 <?php
 
 	define('DIR_BASE', realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..').DIRECTORY_SEPARATOR);
-	define('DIR_SOURCE', realpath(DIR_SOURCE.'source').DIRECTORY_SEPARATOR);
-	define('DIR_BUILD', realpath(DIR_BUILD.'build').DIRECTORY_SEPARATOR);
+	define('DIR_SOURCE', DIR_BASE.'source'.DIRECTORY_SEPARATOR);
+	define('DIR_BUILD', DIR_BASE.'build'.DIRECTORY_SEPARATOR);
 	
 	define('ST_NOTHING', 0);
 	define('ST_FAILURE', 1);
@@ -109,6 +109,19 @@
 		}
 	}
 	
+	function handle_errors($errno, $errstr='', $errfile='unknown', $errline=0){
+		static $warnings = array(E_USER_DEPRECATED, E_USER_NOTICE, E_USER_WARNING, E_WARNING, E_NOTICE); // array of warning error codes
+		$type = ST_FAILURE;
+		$type = in_array($errno, $warnings) ? ST_WARNING : ST_FAILURE;
+		write_color($type);
+		write_message('     Error ('.$errno.'): '.$errstr);
+		write_message('     '.str_replace(DIR_BASE, '', $errfile).':'.$errline);
+		write_color(ST_NOTHING);
+		return true;
+	}
+	ini_set('display_errors', false);
+	set_error_handler('handle_errors');
+	
 	$taken = microtime(true);
 	write_message(PHP_EOL.'  Build Starting ('.date('r').')'.PHP_EOL);
 	convert_dir(DIR_SOURCE.'core');
@@ -116,7 +129,7 @@
 	convert_dir(DIR_SOURCE.'apps');
 	foreach(array('boot.php', 'config.php', '.htaccess') as $file){
 		$res = copy(DIR_SOURCE.$file, DIR_BUILD.$file);
-		write_message('   Copying '.$file.'...', $res ? ST_SUCCESS : ST_FAILURE);
+		write_message('   Copying '.str_replace(DIR_BASE, '', DIR_SOURCE.$file).'...', $res ? ST_SUCCESS : ST_FAILURE);
 	}
 	$taken = number_format(microtime(true) - $taken, 6);
 	write_message(PHP_EOL.'  Build Finished (in '.$taken.' seconds)'.PHP_EOL, $GLOBALS['result']);

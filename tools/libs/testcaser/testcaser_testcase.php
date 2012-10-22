@@ -1,9 +1,9 @@
 <?php
 
-	class TestcaserTest {
+	class Testcaser_Testase {
 		
 		/**
-		 * @var TestcaserReporter Reporter instance.
+		 * @var Testcaser_Reporter Reporter instance.
 		 */
 		protected $_reporter = null;
 		
@@ -30,14 +30,14 @@
 		
 		/**
 		 * Construct a new testcase.
-		 * @param TestcaserReporter $reporter The reporter to use.
+		 * @param Testcaser_Reporter $reporter The reporter to use.
 		 */
 		public function __construct($reporter){
 			$this->_reporter = $reporter;
 		}
 		
 		/**
-		 * @return TestcaserReporter The reporter currently in use.
+		 * @return Testcaser_Reporter The reporter currently in use.
 		 */
 		public function getReporter(){
 			return $this->_reporter;

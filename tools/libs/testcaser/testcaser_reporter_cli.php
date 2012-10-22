@@ -1,6 +1,6 @@
 <?php
 
-	class TestcaserReporterCli extends TestcaserReporter {
+	class Testcaser_Reporter_Cli extends Testcaser_Reporter {
 		
 		protected function _color($name='reset'){
 			static $colors = array(

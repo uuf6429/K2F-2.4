@@ -1,6 +1,6 @@
 <?php
 
-	class TestcaserReporterWeb extends TestcaserReporter {
+	class Testcaser_Reporter_Web extends Testcaser_Reporter {
 		/**
 		 * Highlights a PHP value.
 		 * @param string $value Original PHP code/value.

@@ -4,7 +4,7 @@
 
 	require_once 'libs/testcaser/testcaser.php';
 	
-	$rep = (defined('STDIN') || PHP_SAPI === 'cli') ? 'TestcaserReporterCli' : 'TestcaserReporterWeb';
+	$rep = (defined('STDIN') || PHP_SAPI === 'cli') ? 'Testcaser_Reporter_Cli' : 'Testcaser_Reporter_Web';
 	
 	$test = new Testcaser(new $rep);
 	

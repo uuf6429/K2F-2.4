@@ -1,6 +1,6 @@
 <?php
 
-	class TestcaserReporterFake extends TestcaserReporter {
+	class Testcaser_ReporterFake extends Testcaser_Reporter {
 		protected $_reporter;
 		
 		public function __construct(TestcaserReporter $realReporter){
@@ -12,11 +12,11 @@
 		}
 	}
 	
-	class TestTestcaser extends TestcaserTest {
+	class TestcaserTest extends Testcaser_Testase {
 		public function main(){
 			
-			$rep = new TestcaserReporterFake($this->getReporter());
-			$tst = new TestcaserTest($rep);
+			$rep = new Testcaser_ReporterFake($this->getReporter());
+			$tst = new Testcaser_Test($rep);
 			
 			$tst->assertTrue(true, 'Ensure true is true');
 			$tst->assertTrue(1==1, 'Ensure 1 is indeed 1');

@@ -1,6 +1,6 @@
 <?php
 
-	class TestcaserReporter {
+	class Testcaser_Reporter {
 		/**
 		 * @var integer Timestamp of when test started.
 		 */

@@ -1,41 +1,15 @@
 <?php
 	
-	require_once('testcasertest.php');
-	require_once('testcaserreporter.php');
-	require_once('testcaserreportercli.php');
-	require_once('testcaserreporterweb.php');
+	require_once('testcaser_testcase.php');
+	require_once('testcaser_reporter.php');
+	require_once('testcaser_reporter_cli.php');
+	require_once('testcaser_reporter_web.php');
 
 
 	class Testcaser {
 		
 		/**
-		 * Runs an assertion test.
-		 * @param string $message Description of assertion.
-		 * @param mixed $result The real resulting value.
-		 * @param mixed $expected The expected value.
-		 * @param boolean $identical Whether both values must be identical or not (default is false).
-		 */
-		/*public function test($message, $result, $expected, $identical=false){
-			if($identical){
-				$pass = $expected === $result;
-			}else{
-				$pass = $expected == $result;
-			}
-			?><tr>
-				<td class="cell case">
-					<?php echo $this->_highlight_code($message); ?>
-				</td><td class="cell">
-					<?php echo $this->_highlight_code(var_export($expected, true)); ?>
-				</td><td class="cell">
-					<?php echo $this->_highlight_code(var_export($result, true)); ?>
-				</td><td class="<?php echo $pass ? 'pass' : 'fail'; ?>">
-					<?php echo $pass ? 'PASS' : 'FAIL'; ?>
-				</td>
-			</tr><?php
-		}*/
-		
-		/**
-		 * @var TestcaserReporter Reporter instance. 
+		 * @var Testcaser_Reporter Reporter instance. 
 		 */
 		protected $_reporter = null;
 		
@@ -46,7 +20,7 @@
 		
 		/**
 		 * Construct a new instance with dependencies.
-		 * @param TestcaserReporter $reporter Reporter instance.
+		 * @param Testcaser_Reporter $reporter Reporter instance.
 		 */
 		public function __construct($reporter){
 			$this->_reporter = $reporter;
@@ -114,7 +88,7 @@
 			$ignore = get_class_methods($ignore);
 			// run
 			foreach(get_declared_classes() as $class){
-				if(is_subclass_of($class, 'TestcaserTest')){
+				if(is_subclass_of($class, 'Testcaser_Testase')){
 					$inst = new $class($this->_reporter);
 					foreach(get_class_methods($inst) as $mtd){
 						if(!in_array($mtd, $ignore))$inst->$mtd();
@@ -129,7 +103,7 @@
 		
 		/**
 		 * Sets the reporter instance.
-		 * @param TestcaserReporter $reporter Reporter instance.
+		 * @param Testcaser_Reporter $reporter Reporter instance.
 		 */
 		public function set_reporter($reporter){
 			$this->_reporter = $reporter;
@@ -137,7 +111,7 @@
 		
 		/**
 		 * Gets the reporter instance.
-		 * @return TestcaserReporter Reporter instance.
+		 * @return Testcaser_Reporter Reporter instance.
 		 */
 		public function get_reporter(){
 			return $this->_reporter;

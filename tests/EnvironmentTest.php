@@ -1,6 +1,6 @@
 <?php
 	
-	class TestEnvironment extends TestcaserTest {
+	class EnvironmentTest extends Testcaser_Testase {
 		public function test_php(){
 			
 			$v = explode('.', phpversion().'..');

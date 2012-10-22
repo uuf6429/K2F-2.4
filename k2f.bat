@@ -67,7 +67,7 @@ REM Main decision engine
 			GOTO END_SWITCH
 		:CASE_PUSH
 			CALL git config credential.helper store
-			CALL git add -A
+			CALL git add -A -f -v
 			SET /P MSG=Commit Message: 
 			CALL git commit --allow-empty-message -m "%MSG%"
 			CALL git push -u origin %BRANCH%

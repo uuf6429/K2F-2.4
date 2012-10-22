@@ -114,6 +114,10 @@
 	convert_dir(DIR_SOURCE.'core');
 	convert_dir(DIR_SOURCE.'libs');
 	convert_dir(DIR_SOURCE.'apps');
+	foreach(array('boot.php', 'config.php', '.htaccess') as $file){
+		$res = copy(DIR_SOURCE.$file, DIR_BUILD.$file);
+		write_message('   Copying '.$file.'...', $res ? ST_SUCCESS : ST_FAILURE);
+	}
 	$taken = number_format(microtime(true) - $taken, 6);
 	write_message(PHP_EOL.'  Build Finished (in '.$taken.' seconds)'.PHP_EOL, $GLOBALS['result']);
 

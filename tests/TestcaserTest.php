@@ -1,9 +1,12 @@
 <?php
 
 	class Testcaser_ReporterFake extends Testcaser_Reporter {
+		/**
+		 * @var TestcaserReporter
+		 */
 		protected $_reporter;
 		
-		public function __construct(TestcaserReporter $realReporter){
+		public function __construct($realReporter){
 			$this->_reporter = $realReporter;
 		}
 		
@@ -16,12 +19,9 @@
 		public function main(){
 			
 			$rep = new Testcaser_ReporterFake($this->getReporter());
-			$tst = new Testcaser_Test($rep);
+			$tst = new Testcaser_Testase($rep);
 			
-			$tst->assertTrue(true, 'Ensure true is true');
-			$tst->assertTrue(1==1, 'Ensure 1 is indeed 1');
-			$tst->assertTrue(1==0, 'Check if 1 is also a 0');
-			$tst->assertTrue(10/0, 'Divide by zero');
+			$tst->assertTrue(true, 'Run a fake assertion');
 		}
 	}
 

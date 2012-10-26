@@ -17,6 +17,9 @@
 			if($rightTxt){
 				$text = rtrim($text);
 				$len = explode(PHP_EOL, $text);
+				foreach($len as $i=>$txt)$len[$i] = implode(PHP_EOL, str_split($txt, $hchars));
+				$text = implode(PHP_EOL, $len);
+				$len = explode(PHP_EOL, $text);
 				$len = strlen($len[count($len) - 1]);
 				$text = str_pad($text, strlen($text) - $len + $hchars - strlen($rightTxt), ' ', STR_PAD_RIGHT);
 				$text .= '['.$this->_color($rightCol).$rightTxt.$this->_color().']'.PHP_EOL;

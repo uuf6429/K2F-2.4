@@ -83,7 +83,7 @@
 					$this->_reporter->handle_exception($e);
 				}
 			}
-			$ignore = new TestcaserTest(null);
+			$ignore = new Testcaser_Testase(null);
 			$ignore = get_class_methods($ignore);
 			// run
 			foreach(get_declared_classes() as $class){
